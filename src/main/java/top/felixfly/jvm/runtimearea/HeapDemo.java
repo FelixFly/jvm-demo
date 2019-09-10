@@ -11,6 +11,8 @@ import java.lang.management.ManagementFactory;
  * -XX:InitialHeapSize=size 堆的初始化大小,必须是1024的倍数并且大于1MB
  * -XX:MaxHeapSize=size 堆的最大值,必须是1024的倍数并且大于2MB
  *
+ * 因为有老年代担保机制存在，只会在老年代发生OOM:{@link OutOfMemoryError}: Java heap space
+ *
  * @author FelixFly 2019/9/10
  */
 public class HeapDemo {
@@ -37,10 +39,13 @@ public class HeapDemo {
      * class space    used 323K, capacity 388K, committed 512K, reserved 1048576K
      */
     public static void main(String[] args) {
+        byte[] bytes = new byte[201 * 1024 * 1024];
         ManagementFactory.getMemoryPoolMXBeans().forEach(mxBean -> {
             System.out.printf("[%s]:%dK used %dK\n", mxBean.getName(),
                               mxBean.getUsage().getInit() / 1024,
                               mxBean.getUsage().getUsed() / 1024);
         });
+
+
     }
 }
