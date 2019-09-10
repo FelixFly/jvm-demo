@@ -6,6 +6,7 @@
 
 # IDEA files
 .idea/
+target/
 
 # BlueJ files
 *.ctxt
